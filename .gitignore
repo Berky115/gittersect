@@ -6,3 +6,6 @@ virtualEnv/
 # Compiled source #
 ###################
 *.pyc
+
+#Specific files
+todo.md
