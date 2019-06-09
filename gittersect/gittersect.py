@@ -27,10 +27,6 @@ class GittersectService(object):
         user1_followers = self.single_user(user1)
         user2_followers = self.single_user(user2)
 
-        print 'yoooooo'
-        print user1_followers
-        print user2_followers
-
         if 'Not Found' in user1_followers:
             return 'user ' + user1 + ' not found'
 
