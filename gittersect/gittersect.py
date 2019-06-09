@@ -10,7 +10,12 @@ class GittersectService(object):
         gh_session = requests.Session()
         url = ''.join(['https://api.github.com/users/', name, '/followers'])
         followers = json.loads(gh_session.get(url).text)
+        if 'message' in followers:
+            return followers['message']
+        else:
+            return self.extract_login(followers)
 
+    def extract_login(self, followers):
         followers_login = []
         for follower in followers:
             if 'login' in follower:
@@ -22,22 +27,27 @@ class GittersectService(object):
         user1_followers = self.single_user(user1)
         user2_followers = self.single_user(user2)
 
-        total = 0
+        print 'yoooooo'
+        print user1_followers
+        print user2_followers
+
+        if 'Not Found' in user1_followers:
+            return 'user ' + user1 + ' not found'
+
+        if 'Not Found' in user2_followers:
+            return 'user ' + user2 + ' not found'
+
         intersecting_followers = []
         for follower in user1_followers:
             if follower in user2_followers:
                 intersecting_followers.append(follower)
-                total += 1
-        if total == 0:
+        if len(intersecting_followers) == 0:
             intersecting_followers.append('No matches found!')
         self.print_intersecting_users(intersecting_followers)
           
     def print_intersecting_users(self, followers):
         for follower in followers:
             print follower
-
-#Note : Not a part of GittersectService class, likely refactor opportunity
-# Delayed response, may need to optimize.
 
 
 def main():
