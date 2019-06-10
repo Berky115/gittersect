@@ -6,16 +6,13 @@ import os
 
 GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
 
-
 class GittersectService(object):
     '''A commandline utility comparing followers between two users'''
-    def __init__(self):
-        self.token = GITHUB_ACCESS_TOKEN
 
     def single_user(self, name):
         headers = None
-        if self.token:
-            headers = {'Authorization': 'token ' + self.token}
+        if GITHUB_ACCESS_TOKEN:
+            headers = {'Authorization': 'token ' + GITHUB_ACCESS_TOKEN}
         session = requests.Session()
         
         url = ''.join(['https://api.github.com/users/', name, '/followers'])
@@ -50,7 +47,6 @@ class GittersectService(object):
         if len(intersecting_followers) == 0:
             intersecting_followers.append('No matches found!')
         return intersecting_followers
-
 
 def main():
     g = GittersectService()
