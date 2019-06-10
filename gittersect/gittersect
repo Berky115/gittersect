@@ -1,17 +1,27 @@
+#!/usr/bin/env python
 import fire
 import requests
 import json
+import os
+
+GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
 
 
 class GittersectService(object):
     '''A commandline utility comparing followers between two users'''
+    def __init__(self):
+        self.token = GITHUB_ACCESS_TOKEN
 
     def single_user(self, name):
-        gh_session = requests.Session()
+        headers = None
+        if self.token:
+            headers = {'Authorization': 'token ' + self.token}
+        session = requests.Session()
+        
         url = ''.join(['https://api.github.com/users/', name, '/followers'])
-        followers = json.loads(gh_session.get(url).text)
+        followers = json.loads(session.get(url, headers=headers).text)
         if 'message' in followers:
-            return followers['message']
+            return followers
         else:
             return self.extract_login(followers)
 
@@ -27,11 +37,11 @@ class GittersectService(object):
         user1_followers = self.single_user(user1)
         user2_followers = self.single_user(user2)
 
-        if 'Not Found' in user1_followers:
-            return 'user ' + user1 + ' not found'
+        if 'message' in user1_followers:
+            return 'Error on ' + user1 + ' ' + user1_followers['message']
 
-        if 'Not Found' in user2_followers:
-            return 'user ' + user2 + ' not found'
+        if 'message' in user1_followers:
+            return 'Error on ' + user2 + ' ' + user2_followers['message']
 
         intersecting_followers = []
         for follower in user1_followers:
@@ -39,15 +49,12 @@ class GittersectService(object):
                 intersecting_followers.append(follower)
         if len(intersecting_followers) == 0:
             intersecting_followers.append('No matches found!')
-        self.print_intersecting_users(intersecting_followers)
-          
-    def print_intersecting_users(self, followers):
-        for follower in followers:
-            print follower
+        return intersecting_followers
 
 
 def main():
-    fire.Fire(GittersectService)
+    g = GittersectService()
+    fire.Fire(g.compare_users)
 
 if __name__ == '__main__':
     main()
