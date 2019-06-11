@@ -33,20 +33,21 @@ python gittersect/gittersect_test.ut.py
 
 
 
-## Set to Command-line:
+## Command-line instructions:
+
+In order to run gittersect navigate to the gittersect directory and run using 2 user names. Use details below
 
 ```
-chmod +x gittersect.py
-mv gittersect.py gittersect
+Type:        instancemethod
+String form: <bound method GittersectService.compare_users of <__main__.GittersectService object at 0x10f2b0710>>
+File:        ./gittersect
+Line:        32
+
+Usage:       gittersect USER1 USER2
+             gittersect --user1 USER1 --user2 USER2
 ```
 
-add to path
-
-```
-mkdir -p ~/bin
-cp gittersect ~/bin
-export PATH=$PATH":$HOME/bin"
-```
+You may also add the gittersect utility to your path in order to run from anywhere.
 
 ## Commands
 -- --help : See command-line documentation for use
