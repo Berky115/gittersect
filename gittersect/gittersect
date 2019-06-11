@@ -16,18 +16,17 @@ class GittersectService(object):
         session = requests.Session()
         
         url = ''.join(['https://api.github.com/users/', name, '/followers'])
-        followers = json.loads(session.get(url, headers=headers).text)
-        if 'message' in followers:
-            return followers
-        else:
-            return self.extract_login(followers)
+        response = json.loads(session.get(url, headers=headers).text)
+        
+        if 'message' in response:
+            return response
+        
+        return self.extract_login(response)
 
     def extract_login(self, followers):
-        followers_login = []
+        followers_login = [] 
         for follower in followers:
-            if 'login' in follower:
-                followers_login.append(follower['login'])
-
+            followers_login.append(follower.get('login'))
         return followers_login
 
     def compare_users(self, user1, user2):
@@ -35,17 +34,15 @@ class GittersectService(object):
         user2_followers = self.single_user(user2)
 
         if 'message' in user1_followers:
-            return 'Error on ' + user1 + ' ' + user1_followers['message']
+            return 'Error on ' + user1 + ' ' + user1_followers.get('message')
 
         if 'message' in user1_followers:
-            return 'Error on ' + user2 + ' ' + user2_followers['message']
+            return 'Error on ' + user2 + ' ' + user2_followers.get('message')
 
-        intersecting_followers = []
-        for follower in user1_followers:
-            if follower in user2_followers:
-                intersecting_followers.append(follower)
+        intersecting_followers = set(user1_followers).intersection(user2_followers) 
+
         if len(intersecting_followers) == 0:
-            intersecting_followers.append('No matches found!')
+            return 'No matches found!'
         return intersecting_followers
 
 def main():

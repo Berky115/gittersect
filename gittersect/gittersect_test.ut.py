@@ -39,7 +39,9 @@ class Test_gittersect(unittest.TestCase):
         mock.get('https://api.github.com/users/standard_user_a/followers', text='[ { "login": "A" }, { "login": "B" }, { "login": "C" }, { "login": "D" } ]')
         mock.get('https://api.github.com/users/standard_user_b/followers', text='[ { "login": "A2" }, { "login": "B" }, { "login": "C2" }, { "login": "D" } ]')
         response = self.gittersect.compare_users('standard_user_a', 'standard_user_b')
-        self.assertEqual([u'B', u'D'] == response, True)
+        print "lolo"
+        print response
+        self.assertEqual(set([u'B', u'D']) == response, True)
 
 if __name__ == '__main__':
     unittest.main()
