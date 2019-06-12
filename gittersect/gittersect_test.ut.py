@@ -5,16 +5,15 @@ import sys
 
 from gittersect import *
 
-
 class Test_gittersect(unittest.TestCase):
     def setUp(self):
-        self.gittersect = GittersectService()
+        self.gittersect = Gittersect()
 
     @requests_mock.mock()
     def test_returns_user_data_from_api(self, mock):
         mock.get('https://api.github.com/users/standard_user/followers', text='[ { "login": "A" }, { "login": "B" }, { "login": "C" }, { "login": "D" } ]')
         followers = self.gittersect.single_user('standard_user')
-        self.assertEqual(4 == len(followers), True)
+        self.assertEqual([u'A', u'B', u'C', u'D'] == followers, True)
 
     @requests_mock.mock()
     def test_returns_nothing_if_user_has_no_followers(self, mock):
@@ -39,8 +38,6 @@ class Test_gittersect(unittest.TestCase):
         mock.get('https://api.github.com/users/standard_user_a/followers', text='[ { "login": "A" }, { "login": "B" }, { "login": "C" }, { "login": "D" } ]')
         mock.get('https://api.github.com/users/standard_user_b/followers', text='[ { "login": "A2" }, { "login": "B" }, { "login": "C2" }, { "login": "D" } ]')
         response = self.gittersect.compare_users('standard_user_a', 'standard_user_b')
-        print "lolo"
-        print response
         self.assertEqual(set([u'B', u'D']) == response, True)
 
 if __name__ == '__main__':
