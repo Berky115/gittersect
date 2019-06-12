@@ -42,11 +42,6 @@ python gittersect/gittersect_test.ut.py
 In order to run gittersect navigate to the gittersect directory and run using 2 user names. User details below
 
 ```
-Type:        instancemethod
-String form: <bound method GittersectService.compare_users of <__main__.GittersectService object at 0x10f2b0710>>
-File:        ./gittersect
-Line:        32
-
 Usage:       gittersect USER1 USER2
              gittersect --user1 USER1 --user2 USER2
 ```
