@@ -7,9 +7,10 @@ git clone git@github.com:Berky115/gittersect.git
 ```
 
 - install necessary python packages for your environment (virtualEnv is recommended):
-    ```
-    pip install -r requirements.txt 
-    ```
+
+```
+pip install -r requirements.txt 
+```
 
 - run gittersect.py with desired user names
 ```
@@ -27,8 +28,6 @@ To run the utilities test suit. Navigate to the gittersect_test.ut.py file and r
 ```
 python gittersect/gittersect_test.ut.py   
 ```
-
-
 
 ## Command-line instructions:
 
