@@ -1,4 +1,4 @@
-## implementation
+## Implementation
 To implement the gittersect utility follow these steps...
 
 - Clone repository from git:
