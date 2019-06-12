@@ -1,6 +1,3 @@
-### gittersect
-gittersect is a command-line utility that allows a user to compare two github login names and determin what followers they have in common
-
 ## implementation
 To implement the gittersect utility follow these steps...
 
