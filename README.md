@@ -1,3 +1,8 @@
+## Gittersect
+Gittersect is a command-line utility that allows a user to compare two github login names and determine what followers they have in common
+
+
+
 ## Implementation
 To implement the gittersect utility follow these steps...
 
